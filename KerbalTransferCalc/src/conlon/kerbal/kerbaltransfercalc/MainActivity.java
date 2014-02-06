@@ -1,8 +1,11 @@
 package conlon.kerbal.kerbaltransfercalc;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 
 public class MainActivity extends Activity {
 
@@ -18,5 +21,20 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	
+	/** Goto the Kerbal Blog when the news button is pressed **/
+	public void gotoBlog(View view){
+		String url = "http://kerbaldevteam.tumblr.com/";
+		Uri uriUrl = Uri.parse(url);
+		Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+		startActivity(launchBrowser);
+	}
 
+	/** Goto the Kerbal Wiki when the wiki button is pressed **/
+	public void gotoWiki(View view){
+		String url = "http://wiki.kerbalspaceprogram.com/wiki/Main_Page";
+		Uri uriUrl = Uri.parse(url);
+		Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+		startActivity(launchBrowser);
+	}
 }
