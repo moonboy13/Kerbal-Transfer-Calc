@@ -15,6 +15,10 @@
     
     <!-- Orbit Information Screen Strings -->
     <string name="title_activity_orbit_info_screen">Orbit Information</string>
+    <string name="start_description">Current Planet</string>
+    <string name="target_description">Target Planet</string>
+    <string name="assumption">This calculator assumes that your current and target orbits are circular</string>
+    <string name="orb_hint">km</string>
 	<string-array name="initial_planet_array">
 	    <item>Kerbin</item>
 	    <item>Moho</item>

@@ -9,13 +9,81 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".OrbitInfoScreen" >
 
-    <Spinner
-        android:id="@+id/current_planet"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/assumption" />
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
     
-    <Spinner 
-        android:id="@+id/target_planet"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+        <Spinner
+        	android:id="@+id/current_planet"
+        	android:layout_width="0dp"
+        	android:layout_weight="1"
+        	android:layout_height="wrap_content" />
+        
+        <TextView
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:textStyle="bold"
+        	android:paddingLeft="@dimen/orb_info_horizontal_margin"
+        	android:text="@string/start_description"/>
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        <EditText 
+        	android:id="@+id/start_orbit_radius"
+        	android:layout_width="0dp"
+        	android:layout_height="wrap_content"
+        	android:layout_weight="1"
+        	android:inputType="number"
+        	android:gravity="right" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/orb_hint" />
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+        <Spinner 
+        	android:id="@+id/target_planet"
+        	android:layout_width="0dp"
+        	android:layout_weight="1"
+        	android:layout_height="wrap_content"/>
+    
+    	<TextView
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:paddingLeft="@dimen/orb_info_horizontal_margin"
+        	android:textStyle="bold"
+        	android:text="@string/target_description"/>    
+    </LinearLayout>
+    
+    <LinearLayout 
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="horizontal">
+        <EditText 
+        	android:id="@+id/end_orbit_radius"
+        	android:layout_width="0dp"
+        	android:layout_height="wrap_content"
+        	android:layout_weight="1"
+        	android:gravity="right"
+        	android:inputType="number" />
+    
+    	<TextView 
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="@string/orb_hint" />      
+	</LinearLayout>
+          
+ </LinearLayout>
