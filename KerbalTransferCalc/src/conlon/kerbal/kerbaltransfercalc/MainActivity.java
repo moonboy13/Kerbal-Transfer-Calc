@@ -37,4 +37,10 @@ public class MainActivity extends Activity {
 		Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
 		startActivity(launchBrowser);
 	}
+	
+	/** Open the Calculator input screen when start calculator is pressed **/
+	public void startCalc(View view){
+		Intent info_intent= new Intent(this,OrbitInfoScreen.class);
+		startActivity(info_intent);
+	}
 }
