@@ -25,7 +25,7 @@
         <activity
             android:name="conlon.kerbal.kerbaltransfercalc.OrbitInfoScreen"
             android:label="@string/title_activity_orbit_info_screen"
-            android:parentActivityName="conlon.kerbal.kerbaltransfercalc" >
+            android:parentActivityName="conlon.kerbal.kerbaltransfercalc.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="conlon.kerbal.kerbaltransfercalc" />
