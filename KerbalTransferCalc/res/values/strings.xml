@@ -19,6 +19,11 @@
     <string name="target_description">Target Planet</string>
     <string name="assumption">This calculator assumes that your current and target orbits are circular</string>
     <string name="orb_hint">km</string>
+    <string name="hint">enter a number</string>
+    <string name="date_instr">Enter the in game date found at the tracking station</string>
+    <string name="year">Year</string>
+    <string name="day">Day</string>
+    <string name="submit_text">Submit</string>
 	<string-array name="initial_planet_array">
 	    <item>Kerbin</item>
 	    <item>Moho</item>
