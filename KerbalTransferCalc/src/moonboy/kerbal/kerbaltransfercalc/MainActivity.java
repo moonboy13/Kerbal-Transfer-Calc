@@ -1,4 +1,4 @@
-package conlon.kerbal.kerbaltransfercalc;
+package moonboy.kerbal.kerbaltransfercalc;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,15 @@ import android.view.Menu;
 import android.view.View;
 
 public class MainActivity extends Activity {
+	
+	/* Keys for passing values between intents */
+	// Orbint Info Screen Keys
+	public final static String CUR_PLANET = "moonboy.kerbal.kerbaltransfercalc.CUR_PLANET";
+	public final static String TAR_PLANET = "moonboy.kerbal.kerbaltransfercalc.TAR_PLANET";
+	public final static String CUR_ORBIT = "moonboy.kerbal.kerbaltransfercalc.CUR_ORBIT";
+	public final static String TAR_ORBIT = "moonboy.kerbal.kerbaltransfercalc.TAR_ORBIT";
+	public final static String CUR_YEAR = "moonboy.kerbal.kerbaltransfercalc.CUR_YEAR";
+	public final static String CUR_DOY = "moonboy.kerbal.kerbaltransfercalc.CUR_DOY";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

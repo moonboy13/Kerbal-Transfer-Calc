@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="conlon.kerbal.kerbaltransfercalc"
+    package="moonboy.kerbal.kerbaltransfercalc"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="11"
         android:targetSdkVersion="18" />
 
     <application
@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="conlon.kerbal.kerbaltransfercalc.MainActivity"
+            android:name="moonboy.kerbal.kerbaltransfercalc.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,12 +23,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="conlon.kerbal.kerbaltransfercalc.OrbitInfoScreen"
+            android:name="moonboy.kerbal.kerbaltransfercalc.OrbitInfoScreen"
             android:label="@string/title_activity_orbit_info_screen"
-            android:parentActivityName="conlon.kerbal.kerbaltransfercalc.MainActivity" >
+            android:parentActivityName="moonboy.kerbal.kerbaltransfercalc.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="conlon.kerbal.kerbaltransfercalc" />
+                android:value="moonboy.kerbal.kerbaltransfercalc" />
+        </activity>
+        <activity
+            android:name="moonboy.kerbal.kerbaltransfercalc.CalculateTransfer"
+            android:label="@string/title_activity_calculate_transfer"
+            android:parentActivityName="moonboy.kerbal.kerbaltransfercalc.OrbitInfoScreen" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="moonboy.kerbal.kerbaltransfercalc.OrbitInfoScreen" />
         </activity>
     </application>
 

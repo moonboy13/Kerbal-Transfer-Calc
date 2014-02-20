@@ -9,10 +9,10 @@
     <string name="start_button">Start Calculator</string>
     <string name="news_button">Latest Blog Post</string>
     <string name="wiki_button">Visit the Wiki</string>
-        <string name="app_description">This app will calculate the parameters of the burn needed to transfer between
+    <string name="app_description">This app will calculate the parameters of the burn needed to transfer between
         the two indicated bodies in KSP. This app assumes that body you are orbiting is a planet; it will not perform the
         transfer between one of the moons and another body.</string>
-    
+
     <!-- Orbit Information Screen Strings -->
     <string name="title_activity_orbit_info_screen">Orbit Information</string>
     <string name="start_description">Current Planet</string>
@@ -24,22 +24,28 @@
     <string name="year">Year</string>
     <string name="day">Day</string>
     <string name="submit_text">Submit</string>
-	<string-array name="initial_planet_array">
-	    <item>Kerbin</item>
-	    <item>Moho</item>
-	    <item>Eve</item>
-	    <item>Duna</item>
-	    <item>Dres</item>
-	    <item>Jool</item>
-	    <item>Eeloo</item>
-	</string-array>
-	<string-array name="target_planet_array">
-	    <item>Duna</item>
-	    <item>Moho</item>
-	    <item>Eve</item>
-	    <item>Kerbin</item>
-	    <item>Dres</item>
-	    <item>Jool</item>
-	    <item>Eeloo</item>
-	</string-array>
+
+    <string-array name="initial_planet_array">
+        <item>Kerbin</item>
+        <item>Moho</item>
+        <item>Eve</item>
+        <item>Duna</item>
+        <item>Dres</item>
+        <item>Jool</item>
+        <item>Eeloo</item>
+    </string-array>
+    <string-array name="target_planet_array">
+        <item>Duna</item>
+        <item>Moho</item>
+        <item>Eve</item>
+        <item>Kerbin</item>
+        <item>Dres</item>
+        <item>Jool</item>
+        <item>Eeloo</item>
+    </string-array>
+
+    <!-- Transfer Calculation strings -->
+    <string name="title_activity_calculate_transfer">CalculateTransfer</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>
