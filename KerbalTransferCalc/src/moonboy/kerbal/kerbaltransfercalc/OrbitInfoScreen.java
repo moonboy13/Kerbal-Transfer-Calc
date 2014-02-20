@@ -69,8 +69,32 @@ public class OrbitInfoScreen extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	// Validating the input
+	public void validateInput(View view){
+		// Get the spinner values
+		Spinner cur_planet_spinner = (Spinner) findViewById(R.id.current_planet);
+		String cur_planet = cur_planet_spinner.getSelectedItem().toString();
+		Spinner tar_planet_spinner = (Spinner) findViewById(R.id.target_planet);
+		String tar_planet = tar_planet_spinner.getSelectedItem().toString();
+		// Get the orbital values
+		EditText cur_orbit_editText = (EditText) findViewById(R.id.start_orbit_radius);
+		if( cur_orbit_editText.getText().toString().length() == 0){
+			cur_orbit_editText.setError("Please Enter Current Orbital Radius!");
+		}
+		Double cur_orbit_radius = Double.parseDouble(cur_orbit_editText.getText().toString());
+		EditText tar_orbit_editText = (EditText) findViewById(R.id.end_orbit_radius);
+		Double tar_orbit_radius = Double.parseDouble(tar_orbit_editText.getText().toString());
+		// Get the date information
+		EditText cur_year_editText = (EditText) findViewById(R.id.cur_year);
+		int cur_year = Integer.parseInt(cur_year_editText.getText().toString());
+		EditText cur_doy_editText = (EditText) findViewById(R.id.cur_day);
+		Double cur_doy = Double.parseDouble(cur_doy_editText.getText().toString());
+		submitData(cur_planet,tar_planet,cur_orbit_radius,tar_orbit_radius,cur_year,cur_doy);
+	}
+	
 	//Retrieving data and starting calculator
-	public void submitData(View view){
+	void submitData(String cur_planet, String tar_planet, Double cur_orbit_radius, Double tar_orbit_radius,
+			int cur_year, Double cur_doy){
 		// Declare Keys
 		// Keys for the values passed to the next intent
 		String CUR_PLANET = "moonboy.kerbal.kerbaltransfercalc.CUR_PLANET";
@@ -81,21 +105,26 @@ public class OrbitInfoScreen extends Activity {
 		String CUR_DOY = "moonboy.kerbal.kerbaltransfercalc.CUR_DOY";
 		// Declare a new intent
 		Intent calc_intent = new Intent(this, CalculateTransfer.class);
+		/*
 		// Get the spinner values
-		Spinner cur_planet_spinner = (Spinner)view.findViewById(R.id.current_planet);
+		Spinner cur_planet_spinner = (Spinner) findViewById(R.id.current_planet);
 		String cur_planet = cur_planet_spinner.getSelectedItem().toString();
-		Spinner tar_planet_spinner = (Spinner)view.findViewById(R.id.target_planet);
+		Spinner tar_planet_spinner = (Spinner) findViewById(R.id.target_planet);
 		String tar_planet = tar_planet_spinner.getSelectedItem().toString();
 		// Get the orbital values
-		EditText cur_orbit_editText = (EditText)view.findViewById(R.id.start_orbit_radius);
+		EditText cur_orbit_editText = (EditText) findViewById(R.id.start_orbit_radius);
+		if( cur_orbit_editText.getText().toString().length() == 0){
+			cur_orbit_editText.setError("Please Enter Current Orbital Radius!");
+		}
 		Double cur_orbit_radius = Double.parseDouble(cur_orbit_editText.getText().toString());
-		EditText tar_orbit_editText = (EditText)view.findViewById(R.id.end_orbit_radius);
+		EditText tar_orbit_editText = (EditText) findViewById(R.id.end_orbit_radius);
 		Double tar_orbit_radius = Double.parseDouble(tar_orbit_editText.getText().toString());
 		// Get the date information
-		EditText cur_year_editText = (EditText)view.findViewById(R.id.cur_year);
-		Double cur_year = Double.parseDouble(cur_year_editText.getText().toString());
-		EditText cur_doy_editText = (EditText)view.findViewById(R.id.cur_day);
+		EditText cur_year_editText = (EditText) findViewById(R.id.cur_year);
+		int cur_year = Integer.parseInt(cur_year_editText.getText().toString());
+		EditText cur_doy_editText = (EditText) findViewById(R.id.cur_day);
 		Double cur_doy = Double.parseDouble(cur_doy_editText.getText().toString());
+		*/
 		// Add all this information to the new intent
 		calc_intent.putExtra(CUR_PLANET, cur_planet);
 		calc_intent.putExtra(TAR_PLANET, tar_planet);
