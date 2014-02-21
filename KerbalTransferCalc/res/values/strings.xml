@@ -43,6 +43,12 @@
         <item>Jool</item>
         <item>Eeloo</item>
     </string-array>
+    
+    <!-- Input validation error messages -->
+    <string name="cur_orb_err">Please enter the current orbital radius</string>
+    <string name="tar_orb_err">Please enter the target orbital radius</string>
+    <string name="year_err">Please enter the current year</string>
+    <string name="doy_err">Please enter the current day of year</string>
 
     <!-- Transfer Calculation strings -->
     <string name="title_activity_calculate_transfer">CalculateTransfer</string>
