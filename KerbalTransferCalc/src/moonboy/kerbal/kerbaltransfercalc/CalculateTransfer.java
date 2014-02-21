@@ -18,8 +18,8 @@ public class CalculateTransfer extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		// Hide the action bar
-		ActionBar actionbar = getActionBar();
-		actionbar.hide();
+		//ActionBar actionbar = getActionBar();
+		//actionbar.hide();
 		// Retrieve information from previous intent
 		
 	}
