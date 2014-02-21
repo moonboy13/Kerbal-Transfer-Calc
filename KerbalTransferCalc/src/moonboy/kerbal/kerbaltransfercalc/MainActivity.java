@@ -10,7 +10,7 @@ import android.view.View;
 public class MainActivity extends Activity {
 	
 	/* Keys for passing values between intents */
-	// Orbint Info Screen Keys
+	// Orbit Info Screen Data Keys
 	public final static String CUR_PLANET = "moonboy.kerbal.kerbaltransfercalc.CUR_PLANET";
 	public final static String TAR_PLANET = "moonboy.kerbal.kerbaltransfercalc.TAR_PLANET";
 	public final static String CUR_ORBIT = "moonboy.kerbal.kerbaltransfercalc.CUR_ORBIT";

@@ -121,23 +121,15 @@ public class OrbitInfoScreen extends Activity {
 	//Retrieving data and starting calculator
 	void submitData(String cur_planet, String tar_planet, Double cur_orbit_radius, Double tar_orbit_radius,
 			int cur_year, Double cur_doy){
-		// Declare Keys
-		// Keys for the values passed to the next intent
-		String CUR_PLANET = "moonboy.kerbal.kerbaltransfercalc.CUR_PLANET";
-		String TAR_PLANET = "moonboy.kerbal.kerbaltransfercalc.TAR_PLANET";
-		String CUR_ORBIT = "moonboy.kerbal.kerbaltransfercalc.CUR_ORBIT";
-		String TAR_ORBIT = "moonboy.kerbal.kerbaltransfercalc.TAR_ORBIT";
-		String CUR_YEAR = "moonboy.kerbal.kerbaltransfercalc.CUR_YEAR";
-		String CUR_DOY = "moonboy.kerbal.kerbaltransfercalc.CUR_DOY";
 		// Declare a new intent
 		Intent calc_intent = new Intent(this, CalculateTransfer.class);
 		// Add all the information to the new intent
-		calc_intent.putExtra(CUR_PLANET, cur_planet);
-		calc_intent.putExtra(TAR_PLANET, tar_planet);
-		calc_intent.putExtra(CUR_ORBIT, cur_orbit_radius);
-		calc_intent.putExtra(TAR_ORBIT, tar_orbit_radius);
-		calc_intent.putExtra(CUR_YEAR, cur_year);
-		calc_intent.putExtra(CUR_DOY, cur_doy);
+		calc_intent.putExtra(MainActivity.CUR_PLANET, cur_planet);
+		calc_intent.putExtra(MainActivity.TAR_PLANET, tar_planet);
+		calc_intent.putExtra(MainActivity.CUR_ORBIT, cur_orbit_radius);
+		calc_intent.putExtra(MainActivity.TAR_ORBIT, tar_orbit_radius);
+		calc_intent.putExtra(MainActivity.CUR_YEAR, cur_year);
+		calc_intent.putExtra(MainActivity.CUR_DOY, cur_doy);
 		// Start the intent
 		startActivity(calc_intent);
 	}

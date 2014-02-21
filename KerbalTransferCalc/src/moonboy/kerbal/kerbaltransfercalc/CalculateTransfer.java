@@ -20,6 +20,8 @@ public class CalculateTransfer extends Activity {
 		// Hide the action bar
 		ActionBar actionbar = getActionBar();
 		actionbar.hide();
+		// Retrieve information from previous intent
+		
 	}
 
 	/**
