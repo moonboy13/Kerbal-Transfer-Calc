@@ -15,3 +15,7 @@ https://kerbalspaceprogram.com/index.php
 
 Calculator that inspired me:
 http://alexmoon.github.io/ksp/
+
+Found a useful in-game mod that does exaclty what I hope to do with my calculator:
+http://kerbalspaceport.com/protractor-for-ksp-0-18/
+That I can confirm works with 0.23.
