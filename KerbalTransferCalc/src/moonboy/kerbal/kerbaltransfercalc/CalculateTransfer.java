@@ -25,7 +25,7 @@ public class CalculateTransfer extends Activity {
 	}
 
 	/**
-	 * Set up the {@link android.app.ActionBar}, if the API is available.
+	 * Set up the {@link droid.app.ActionBar}, if the API is available.
 	 */
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void setupActionBar() {
