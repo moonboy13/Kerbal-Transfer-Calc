@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- This is a resource file describing Kerbin -->
 <resource>
-    <integer name="radius_km">600</integer>
-    <integer name="mass_kg">3.53e12</integer>
-    <integer name="soi_m">84159286</integer>
-    <integer name="semimajor_m">13599840256</integer>
-    <integer name="orbperiod_s">9203545</integer>
+    <radius-km>600</radius-km>
+    <mass-kg>3.53e12</mass-kg>
+    <soi-m>84159286</soi-m>
+    <semimajor-m>13599840256</semimajor-m>
+    <orbperiod-s>9203545</orbperiod-s>
 </resource>
