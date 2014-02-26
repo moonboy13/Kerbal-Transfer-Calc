@@ -1,5 +1,8 @@
 package moonboy.kerbal.kerbaltransfercalc;
 
+
+import org.xmlpull.v1.XmlPullParser;
+
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -21,7 +24,8 @@ public class CalculateTransfer extends Activity {
 		ActionBar actionbar = getActionBar();
 		actionbar.hide();
 		// Retrieve information from previous intent
-		
+		// Test of retrieving custom xml data first
+		XmlPullParser xpp = context.getResources().getXml(R.xml.kerbin);
 	}
 
 	/**

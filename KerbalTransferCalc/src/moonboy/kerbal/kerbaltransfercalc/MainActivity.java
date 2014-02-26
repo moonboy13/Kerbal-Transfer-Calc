@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
 	
 	/** Goto the Kerbal Blog when the news button is pressed **/
 	public void gotoBlog(View view){
-		String url = "http://kerbaldevteam.tumblr.com/";
+		String url = "http://kerbaldevteam.tumblr.com/mobile";
 		Uri uriUrl = Uri.parse(url);
 		Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
 		startActivity(launchBrowser);
