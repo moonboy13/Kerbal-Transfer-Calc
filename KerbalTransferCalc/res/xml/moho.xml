@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resource>
+    <radius-km>250</radius-km>
+    <mass-kg>2.53e21</mass-kg>
+    <soi-m>9646663</soi-m>
+    <semimajor-m>9832684544</semimajor-m>
+    <orbperiod-s>2215754</orbperiod-s>
+    <inclination-deg>7.0</inclination-deg>
+</resource>

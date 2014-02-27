@@ -2,8 +2,9 @@
 <!-- This is a resource file describing Kerbin -->
 <resource>
     <radius-km>600</radius-km>
-    <mass-kg>3.53e12</mass-kg>
+    <mass-kg>5.29e22</mass-kg>
     <soi-m>84159286</soi-m>
     <semimajor-m>13599840256</semimajor-m>
     <orbperiod-s>9203545</orbperiod-s>
+    <inclination-deg>0.0</inclination-deg>
 </resource>
