@@ -107,7 +107,23 @@ class PlanetInfo{
 
 // Class to contain the methods that will calculate the transfer orbital parameters
 class TransferParameters{
+	// Constants Definitions
+	private static final int SEC_DAY=86400, SEC_YEAR=365*SEC_DAY;
+	private static final double GRAV_CONST=6.67e-11;
+	// Class Variables
+	private PlanetInfo curInfo, tarInfo;
+	private double secondsFromStart;
 	
+	// Class Constructor
+	TransferParameters(String curPlanet, String tarPlanet, double curOrbit, double tarOrbit, double curDOY,
+			           int curYear, Context parent){
+		// Get the orbital parameters of the planets
+		curInfo = new PlanetInfo(parent,curPlanet);
+		tarInfo = new PlanetInfo(parent,tarPlanet);
+		// Calculate how many seconds have passed since t0
+		secondsFromStart=curYear*SEC_YEAR+curDOY*SEC_DAY;
+		
+	}
 }
 
 public class CalculateTransfer extends Activity {
@@ -123,17 +139,13 @@ public class CalculateTransfer extends Activity {
 		actionbar.hide();
 		// Retrieve information from previous intent
 		Intent previousIntent = getIntent();
-		// Retrieve the information for the planets in question
 		String curPlanet = previousIntent.getStringExtra(MainActivity.CUR_PLANET);
-		PlanetInfo curInfo = new PlanetInfo(this,curPlanet);
 		String tarPlanet = previousIntent.getStringExtra(MainActivity.TAR_PLANET);
-		PlanetInfo tarInfo = new PlanetInfo(this,tarPlanet);
-		// Assign the rest of the information to local variables
 		double curOrbit = Double.parseDouble(previousIntent.getStringExtra(MainActivity.CUR_ORBIT));
 		double tarOrbit = Double.parseDouble(previousIntent.getStringExtra(MainActivity.TAR_ORBIT));
 		double curDOY = Double.parseDouble(previousIntent.getStringExtra(MainActivity.CUR_DOY));
 		int curYear = Integer.parseInt(previousIntent.getStringExtra(MainActivity.CUR_YEAR));
-		calcTrans(curInfo,tarInfo,curOrbit,tarOrbit,curDOY,curYear);
+		calcTrans(this,curPlanet,tarPlanet,curOrbit,tarOrbit,curDOY,curYear);
 	}
 
 	/**
@@ -171,7 +183,7 @@ public class CalculateTransfer extends Activity {
 	}
 
 	// Method to handle the calculating of the orbital transfer
-	void calcTrans(PlanetInfo curPlanet, PlanetInfo tarPlanet, double curOrbit, double tarOrbit,
+	void calcTrans(Context parent, String curPlanet, String tarPlanet, double curOrbit, double tarOrbit,
 			       double curDOY, int curYear){
 		
 	}
