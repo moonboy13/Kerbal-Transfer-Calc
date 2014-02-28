@@ -21,9 +21,9 @@ import android.view.MenuItem;
 // and store the information for it.
 class PlanetInfo{
 	// Class variables
-	double mass, inclination;
-	int sphereOfInfluence, semiMajorAxis, orbitalPeriod, radius;
-	XmlPullParser xpp;
+	private double mass, inclination;
+	private int sphereOfInfluence, semiMajorAxis, orbitalPeriod, argumentOfPeriapsis, radius;
+	private XmlPullParser xpp;
 	
 	// Constructor
 	PlanetInfo(Context parent, String planet){
@@ -67,6 +67,9 @@ class PlanetInfo{
 					} else if (xpp.getName() == "inclination-deg"){
 						xpp.next();
 						inclination = Double.parseDouble(xpp.getText());
+					} else if (xpp.getName() == "argofper-deg"){
+						xpp.next();
+						argumentOfPeriapsis = Integer.parseInt(xpp.getText());
 					}
 				}
 				xpp.next();
@@ -77,6 +80,29 @@ class PlanetInfo{
 			e.printStackTrace();
 		}
 	}
+
+	// Methods to access values
+	double getMass(){
+		return mass;
+	}
+	double getInclination(){
+		return inclination;
+	}
+	int getSOI(){
+		return sphereOfInfluence;
+	}
+	int getSemiMajorAxis(){
+		return semiMajorAxis;
+	}
+	int getPeriod(){
+		return orbitalPeriod;
+	}
+	int getRadius(){
+		return radius;
+	}
+    int getArgOfPeri(){
+    	return argumentOfPeriapsis;
+    }
 }
 
 public class CalculateTransfer extends Activity {
