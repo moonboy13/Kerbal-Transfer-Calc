@@ -105,6 +105,11 @@ class PlanetInfo{
     }
 }
 
+// Class to contain the methods that will calculate the transfer orbital parameters
+class TransferParameters{
+	
+}
+
 public class CalculateTransfer extends Activity {
 
 	@Override
@@ -119,12 +124,16 @@ public class CalculateTransfer extends Activity {
 		// Retrieve information from previous intent
 		Intent previousIntent = getIntent();
 		// Retrieve the information for the planets in question
-		String cur_planet = previousIntent.getStringExtra(MainActivity.CUR_PLANET);
-		PlanetInfo curInfo = new PlanetInfo(this,cur_planet);
-		String tar_planet = previousIntent.getStringExtra(MainActivity.TAR_PLANET);
-		PlanetInfo tarInfo = new PlanetInfo(this,tar_planet);
-		// Assign the rest of the information to local variables.
-		
+		String curPlanet = previousIntent.getStringExtra(MainActivity.CUR_PLANET);
+		PlanetInfo curInfo = new PlanetInfo(this,curPlanet);
+		String tarPlanet = previousIntent.getStringExtra(MainActivity.TAR_PLANET);
+		PlanetInfo tarInfo = new PlanetInfo(this,tarPlanet);
+		// Assign the rest of the information to local variables
+		double curOrbit = Double.parseDouble(previousIntent.getStringExtra(MainActivity.CUR_ORBIT));
+		double tarOrbit = Double.parseDouble(previousIntent.getStringExtra(MainActivity.TAR_ORBIT));
+		double curDOY = Double.parseDouble(previousIntent.getStringExtra(MainActivity.CUR_DOY));
+		int curYear = Integer.parseInt(previousIntent.getStringExtra(MainActivity.CUR_YEAR));
+		calcTrans(curInfo,tarInfo,curOrbit,tarOrbit,curDOY,curYear);
 	}
 
 	/**
@@ -161,4 +170,9 @@ public class CalculateTransfer extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	// Method to handle the calculating of the orbital transfer
+	void calcTrans(PlanetInfo curPlanet, PlanetInfo tarPlanet, double curOrbit, double tarOrbit,
+			       double curDOY, int curYear){
+		
+	}
 }
