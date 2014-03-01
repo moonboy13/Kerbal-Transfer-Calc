@@ -18,7 +18,8 @@
     <string name="start_description">Current Planet</string>
     <string name="target_description">Target Planet</string>
     <string name="assumption">This calculator assumes that your current and target orbits are circular</string>
-    <string name="orb_hint">km</string>
+    <string name="orb_unit">km</string>
+    <string name="orb_hint">Enter Orbit Altitude</string>
     <string name="hint">enter a number</string>
     <string name="date_instr">Enter the in game date found at the tracking station</string>
     <string name="year">Year</string>

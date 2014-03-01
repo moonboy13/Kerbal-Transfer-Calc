@@ -109,10 +109,72 @@ class PlanetInfo{
 class TransferParameters{
 	// Constants Definitions
 	private static final int SEC_DAY=86400, SEC_YEAR=365*SEC_DAY;
-	private static final double GRAV_CONST=6.67e-11;
+	private static final double GRAV_CONST=6.67e-11, KERBOL_MASS=1.76e28,PI=3.1415,MU_KERBOL=GRAV_CONST*KERBOL_MASS;
+	private static final double TWO_PI=2*PI, RAD_2_DEG=180.0/PI;
 	// Class Variables
 	private PlanetInfo curInfo, tarInfo;
-	private double secondsFromStart;
+	private double secondsFromStart, muCurrent, muTarget, curOrbitRadius, tarOrbitRadius;
+	
+	// Internal Methods for calculations
+	/* 
+	 * Calculate the Hohmann transfer time from the current planet's distance from Kerbol (r1) and the
+	 * target planet's distance from Kerbol(r2)
+	 */
+	private double calcTransTime(PlanetInfo curPlanet, PlanetInfo tarPlanet){
+		return PI*Math.sqrt(Math.hypot(curPlanet.getSemiMajorAxis(), tarPlanet.getSemiMajorAxis())/8.0*MU_KERBOL);
+	}
+	/*
+	 * Calculate the necessary angle of separation between the two planets for a successful transfer from
+	 * the Hohmann transfer time and the distance of the target planet from Kerbol
+	 */
+	private double calTransAngle(double tHo, PlanetInfo tarPlanet){
+		return PI-(Math.sqrt(MU_KERBOL/tarPlanet.getSemiMajorAxis())*(tHo/tarPlanet.getSemiMajorAxis()));
+	}
+	/*
+	 * Calculate the current mean anomaly of a planet from its mass, distance from Kerbol, and the current
+	 * in game time in seconds. All planets start with a mean anomaly of PI
+	 */
+	private double meanAnomaly(PlanetInfo planet, double time){
+		double anomaly = PI+Math.sqrt(GRAV_CONST*(KERBOL_MASS+planet.getMass())/Math.pow(planet.getSemiMajorAxis(),3))*time;
+		// The bound on the mean anomaly is 2pi so subtract this off till anomaly is within bounds
+		while(anomaly > TWO_PI){
+			anomaly -= TWO_PI;
+		}
+		return anomaly;
+	}
+	/* 
+	 * Calculate the Hohmann transfer velocity
+	 */
+	private double hohmannVelocity(double muCurrent, PlanetInfo current, PlanetInfo target){
+		return Math.sqrt(muCurrent/current.getSemiMajorAxis())*
+				(Math.sqrt(2*target.getSemiMajorAxis()/(current.getSemiMajorAxis()+target.getSemiMajorAxis()))-1.0);
+	}
+	/*
+	 * Calculate the del v needed for escape
+	 */
+	private double escapeBurn(double muCurrent, double curOrbit, PlanetInfo current, PlanetInfo target){
+		double vHoh = hohmannVelocity(muCurrent,current,target);
+		return Math.sqrt((curOrbit*(current.getSOI()*Math.pow(vHoh,2)-2*muCurrent)+2*current.getSOI()*muCurrent)/(curOrbit*current.getSOI()));
+	}
+	/*
+	 * Calculate the del v needed for capture into the desired orbit at the target planet
+	 */
+	private double captureBurn(double muTarget, double muCurrent, double tarOrbit, PlanetInfo current, PlanetInfo target){
+		double curVelo=hohmannVelocity(muCurrent, current, target)*current.getSemiMajorAxis()/target.getSemiMajorAxis();
+		return Math.sqrt((target.getSOI()*(tarOrbit*Math.pow(curVelo, 2)-2*muTarget)+2*target.getSOI()*muTarget)/(tarOrbit*target.getSOI()));
+	}
+	/*
+	 * Calculate the burn angle in degrees
+	 */
+	private double burnAngle(double muCurrent, double curOrbit, PlanetInfo current, PlanetInfo target){
+		double vHoh = hohmannVelocity(muCurrent, current, target);
+		double epsilon = Math.pow(vHoh, 2)/2 - muCurrent/curOrbit;
+		double h = Math.sqrt(muCurrent*curOrbit);
+		double e = Math.sqrt(1+(2*epsilon*Math.pow(h, 2)/Math.pow(muCurrent, 2)));
+		double ejectionRad = PI - Math.acos(1/e);
+		return ejectionRad*RAD_2_DEG;
+	}
+	
 	
 	// Class Constructor
 	TransferParameters(String curPlanet, String tarPlanet, double curOrbit, double tarOrbit, double curDOY,
@@ -122,8 +184,15 @@ class TransferParameters{
 		tarInfo = new PlanetInfo(parent,tarPlanet);
 		// Calculate how many seconds have passed since t0
 		secondsFromStart=curYear*SEC_YEAR+curDOY*SEC_DAY;
-		
+		// Calculate the mu's for the planets
+		muCurrent=GRAV_CONST*curInfo.getMass();
+		muTarget=GRAV_CONST*tarInfo.getMass();
+		// Add the radius of the planet to the orbital value to get the actual orbital radius
+		curOrbitRadius=curOrbit+curInfo.getRadius();
+		tarOrbitRadius=tarOrbit+tarInfo.getRadius();
 	}
+	
+	// Method to calculate the transfer window
 }
 
 public class CalculateTransfer extends Activity {
