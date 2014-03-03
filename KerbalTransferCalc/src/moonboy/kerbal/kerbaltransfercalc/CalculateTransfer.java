@@ -253,10 +253,11 @@ public class CalculateTransfer extends Activity {
 		Intent previousIntent = getIntent();
 		String curPlanet = previousIntent.getStringExtra(MainActivity.CUR_PLANET);
 		String tarPlanet = previousIntent.getStringExtra(MainActivity.TAR_PLANET);
-		double curOrbit = Double.parseDouble(previousIntent.getStringExtra(MainActivity.CUR_ORBIT));
-		double tarOrbit = Double.parseDouble(previousIntent.getStringExtra(MainActivity.TAR_ORBIT));
-		double curDOY = Double.parseDouble(previousIntent.getStringExtra(MainActivity.CUR_DOY));
-		int curYear = Integer.parseInt(previousIntent.getStringExtra(MainActivity.CUR_YEAR));
+		Bundle extras = previousIntent.getExtras();
+		double curOrbit = extras.getDouble(MainActivity.CUR_ORBIT);
+		double tarOrbit = extras.getDouble(MainActivity.TAR_ORBIT);
+		double curDOY = extras.getDouble(MainActivity.CUR_DOY);
+		int curYear = extras.getInt(MainActivity.CUR_YEAR);
 		calcTrans(this,curPlanet,tarPlanet,curOrbit,tarOrbit,curDOY,curYear);
 	}
 

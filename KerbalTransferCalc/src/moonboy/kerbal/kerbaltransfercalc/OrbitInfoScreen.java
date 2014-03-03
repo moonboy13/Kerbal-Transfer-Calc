@@ -119,8 +119,8 @@ public class OrbitInfoScreen extends Activity {
 	}
 	
 	//Retrieving data and starting calculator
-	void submitData(String curPlanet, String tarPlanet, Double curOrbitRadius, Double tarOrbitRadius,
-			int curYear, Double curDOY){
+	void submitData(String curPlanet, String tarPlanet, double curOrbitRadius, double tarOrbitRadius,
+			int curYear, double curDOY){
 		// Declare a new intent
 		Intent calc_intent = new Intent(this, CalculateTransfer.class);
 		// Add all the information to the new intent
