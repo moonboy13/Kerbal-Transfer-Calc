@@ -46,9 +46,9 @@ class PlanetInfo{
 		}
 		try{
 			int eventType = xpp.getEventType();
-			while (eventType != xpp.END_DOCUMENT){
+			while (eventType != XmlPullParser.END_DOCUMENT){
 				// Find the start tag then use nested if's again to assign values
-				if(eventType == xpp.START_TAG){
+				if(eventType == XmlPullParser.START_TAG){
 					if (xpp.getName()=="radius-km"){
 						xpp.next();
 						radius = Integer.parseInt(xpp.getText());
@@ -108,7 +108,7 @@ class PlanetInfo{
 // Class to contain the methods that will calculate the transfer orbital parameters
 class TransferParameters{
 	// Constants Definitions
-	private static final int SEC_DAY=86400, SEC_YEAR=365*SEC_DAY;
+	static final int SEC_HOUR=3600, SEC_DAY=24*SEC_HOUR, SEC_YEAR=365*SEC_DAY; // These parameters will be useful outside the class to they are not private
 	private static final double GRAV_CONST=6.67e-11, KERBOL_MASS=1.76e28,PI=3.1415,MU_KERBOL=GRAV_CONST*KERBOL_MASS;
 	private static final double TWO_PI=2*PI, RAD_2_DEG=180.0/PI;
 	// Class Variables
@@ -131,16 +131,10 @@ class TransferParameters{
 		return PI-(Math.sqrt(MU_KERBOL/tarPlanet.getSemiMajorAxis())*(tHo/tarPlanet.getSemiMajorAxis()));
 	}
 	/*
-	 * Calculate the current mean anomaly of a planet from its mass, distance from Kerbol, and the current
-	 * in game time in seconds. All planets start with a mean anomaly of PI
+	 * Calculate the mean motion of a planet
 	 */
-	private double meanAnomaly(PlanetInfo planet, double time){
-		double anomaly = PI+Math.sqrt(GRAV_CONST*(KERBOL_MASS+planet.getMass())/Math.pow(planet.getSemiMajorAxis(),3))*time;
-		// The bound on the mean anomaly is 2pi so subtract this off till anomaly is within bounds
-		while(anomaly > TWO_PI){
-			anomaly -= TWO_PI;
-		}
-		return anomaly;
+	private double meanMotion(PlanetInfo planet){
+		return PI+Math.sqrt(GRAV_CONST*(KERBOL_MASS+planet.getMass())/Math.pow(planet.getSemiMajorAxis(),3));
 	}
 	/* 
 	 * Calculate the Hohmann transfer velocity
@@ -193,6 +187,55 @@ class TransferParameters{
 	}
 	
 	// Method to calculate the transfer window
+	double getTravelTime(){
+		return calcTransTime(curInfo,tarInfo);
+	}
+	// This method is to calculate the time to the next transfer window
+	double timeToTransfer(){
+		// Declarations
+		double curTrueAnomaly, tarTrueAnomaly, sep, diff, transTime, transAngle, deltaAngle, timeTrans;
+		// Get the orbital positions and angular separation of the two planets
+		curTrueAnomaly=meanMotion(curInfo)*secondsFromStart+curInfo.getArgOfPeri();
+		while (curTrueAnomaly > TWO_PI){
+			curTrueAnomaly-=TWO_PI;
+		}
+		tarTrueAnomaly=meanMotion(tarInfo)*secondsFromStart+tarInfo.getArgOfPeri();
+		while (tarTrueAnomaly > TWO_PI){
+			tarTrueAnomaly-=TWO_PI;
+		}
+		/*
+		 * If I am traveling outwards in the Kerbol system I want my target to be ahead of my
+		 * current planet. If I am traveling inwards I want my current planet to be ahead of my
+		 * target planet.
+		 */
+		if (curInfo.getSemiMajorAxis() > tarInfo.getSemiMajorAxis()){
+			sep=curTrueAnomaly-tarTrueAnomaly;
+		} else {
+			sep=tarTrueAnomaly-curTrueAnomaly;
+		}
+		if (sep < 0){ sep+=TWO_PI;}
+		// Now figure out what the transfer angle should be and the difference between that and the current
+		// separation
+		transTime=calcTransTime(curInfo,tarInfo);
+		transAngle=calTransAngle(transTime,tarInfo);
+		diff=sep-transAngle;
+		if (diff < 0){diff+=TWO_PI;} // if diff is negative then the planets need to do another lap to get into place
+		// Calculate the rate of angle change between the planets with respect to time
+		deltaAngle=Math.abs(meanMotion(curInfo)-meanMotion(tarInfo));
+		// The time to transfer (in seconds) is the current angular distance divided by the deltaAngle
+		timeTrans=diff/deltaAngle;
+		return timeTrans;
+	}
+    // The rest are simple get methods to get the values
+	double getEscapeBurn(){
+		return escapeBurn(muCurrent, curOrbitRadius, curInfo, tarInfo);
+	}
+	double getCaptureBurn(){
+		return captureBurn(muTarget, muCurrent, tarOrbitRadius, curInfo, tarInfo);
+	}
+	double getBurnAngle(){
+		return burnAngle(muCurrent,curOrbitRadius,curInfo,tarInfo);
+	}
 }
 
 public class CalculateTransfer extends Activity {
@@ -204,8 +247,8 @@ public class CalculateTransfer extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		// Hide the action bar
-		ActionBar actionbar = getActionBar();
-		actionbar.hide();
+		//ActionBar actionbar = getActionBar();
+		//actionbar.hide();
 		// Retrieve information from previous intent
 		Intent previousIntent = getIntent();
 		String curPlanet = previousIntent.getStringExtra(MainActivity.CUR_PLANET);
@@ -254,6 +297,37 @@ public class CalculateTransfer extends Activity {
 	// Method to handle the calculating of the orbital transfer
 	void calcTrans(Context parent, String curPlanet, String tarPlanet, double curOrbit, double tarOrbit,
 			       double curDOY, int curYear){
+		// Some variable declarations
+		double secondsToTransfer, yearsToTransfer, daysToTransfer, hoursToTransfer, tempTime;
+		double transferYear, transferDOY, delVEsc, delVCap, burnAngleDeg, travelTime;
+		TransferParameters transfer = new TransferParameters(curPlanet,tarPlanet,curOrbit,tarOrbit,curDOY,curYear,parent);
+		// Get the transfer time and convert it to a more usable time (both time to transfer and a date for transfer)
+		secondsToTransfer=transfer.timeToTransfer();
+		yearsToTransfer=secondsToTransfer/TransferParameters.SEC_YEAR;
+		tempTime=secondsToTransfer%TransferParameters.SEC_YEAR;
+		daysToTransfer=tempTime/TransferParameters.SEC_DAY;
+		tempTime%=TransferParameters.SEC_DAY;
+		hoursToTransfer=tempTime/TransferParameters.SEC_HOUR;
+		transferYear=curYear+yearsToTransfer;
+		transferDOY=curDOY+daysToTransfer;
+		if (transferDOY > 365){
+			transferDOY-=365;
+			transferYear++;
+		}
+		// Get the rest of the parameters
+		delVEsc=transfer.getEscapeBurn();
+		delVCap=transfer.getCaptureBurn();
+		burnAngleDeg=transfer.getBurnAngle();
+		travelTime=transfer.getTravelTime();
+		travelTime/=(double) TransferParameters.SEC_DAY;
+		
+		// Display this lovely information
+		displayData(travelTime,transferYear,transferDOY,delVEsc,delVCap,yearsToTransfer,daysToTransfer,hoursToTransfer,burnAngleDeg,curPlanet,tarPlanet);
+	}
+	
+	// Method to display the data
+	public void displayData(double transTime, double winYear, double winDOY, double delVEsc, double delVCap, double yearsToTransfer, 
+			double daysToTransfer, double hoursToTransfer, double burnAngle, String curPlanet, String TarPlanet){
 		
 	}
 }
