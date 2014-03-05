@@ -7,7 +7,6 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import android.annotation.TargetApi;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +15,7 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 // Class to open the corresponding XML file for particular planets
 // and store the information for it.
@@ -323,12 +323,13 @@ public class CalculateTransfer extends Activity {
 		travelTime/=(double) TransferParameters.SEC_DAY;
 		
 		// Display this lovely information
-		displayData(travelTime,transferYear,transferDOY,delVEsc,delVCap,yearsToTransfer,daysToTransfer,hoursToTransfer,burnAngleDeg,curPlanet,tarPlanet);
+		//displayData(travelTime,transferYear,transferDOY,delVEsc,delVCap,yearsToTransfer,daysToTransfer,hoursToTransfer,burnAngleDeg,curPlanet,tarPlanet);
 	}
 	
-	// Method to display the data
+/*	// Method to display the data
 	public void displayData(double transTime, double winYear, double winDOY, double delVEsc, double delVCap, double yearsToTransfer, 
-			double daysToTransfer, double hoursToTransfer, double burnAngle, String curPlanet, String TarPlanet){
-		
-	}
+			double daysToTransfer, double hoursToTransfer, double burnAngle, String curPlanet, String tarPlanet){
+		TextView planets = (TextView)findViewById(R.id.planets);
+		planets.append(curPlanet+" to "+tarPlanet);
+	}*/
 }

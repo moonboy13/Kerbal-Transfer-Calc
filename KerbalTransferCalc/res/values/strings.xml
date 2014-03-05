@@ -53,7 +53,7 @@
 
     <!-- Transfer Calculation strings -->
     <string name="title_activity_calculate_transfer">CalculateTransfer</string>
-    <string name="planet_msg">The transfer parameters to go from:</string>
+    <string name="planet_msg">The transfer parameters to go from: </string>
     <string name="dv_esc"></string>
 
 </resources>
