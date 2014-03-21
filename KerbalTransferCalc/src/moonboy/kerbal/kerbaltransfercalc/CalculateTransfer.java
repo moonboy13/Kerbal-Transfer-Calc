@@ -15,7 +15,7 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.widget.Toast;
 
 // Class to open the corresponding XML file for particular planets
 // and store the information for it.
@@ -45,6 +45,7 @@ class PlanetInfo{
 			xpp = parent.getResources().getXml(R.xml.eeloo);
 		}
 		try{
+			Toast.makeText(parent, "Getting Orbital information for "+planet, Toast.LENGTH_LONG).show();
 			int eventType = xpp.getEventType();
 			while (eventType != XmlPullParser.END_DOCUMENT){
 				// Find the start tag then use nested if's again to assign values
@@ -70,9 +71,11 @@ class PlanetInfo{
 					} else if (xpp.getName() == "argofper-deg"){
 						xpp.next();
 						argumentOfPeriapsis = Integer.parseInt(xpp.getText());
+					} else {
+						Toast.makeText(parent, "Resource "+xpp.getName()+" not recognized!", Toast.LENGTH_LONG).show();
 					}
 				}
-				xpp.next();
+				eventType = xpp.next();
 			}
 		}catch(XmlPullParserException e){
 			e.printStackTrace();

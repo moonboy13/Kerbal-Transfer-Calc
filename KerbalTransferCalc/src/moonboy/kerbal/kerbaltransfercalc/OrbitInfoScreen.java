@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -79,10 +80,17 @@ public class OrbitInfoScreen extends Activity {
 		Double curDOY=0.0;
 		int curYear=0;
 		// Get the spinner values
-		Spinner curPlanetSpinner = (Spinner) findViewById(R.id.current_planet);
-		String curPlanet = curPlanetSpinner.getSelectedItem().toString();
-		Spinner tarPlanetSpinner = (Spinner) findViewById(R.id.target_planet);
-		String tarPlanet = tarPlanetSpinner.getSelectedItem().toString();
+		String curPlanet="", tarPlanet="";
+		try {
+			Spinner curPlanetSpinner = (Spinner) findViewById(R.id.current_planet);
+			curPlanet = curPlanetSpinner.getSelectedItem().toString();
+			Spinner tarPlanetSpinner = (Spinner) findViewById(R.id.target_planet);
+			tarPlanet = tarPlanetSpinner.getSelectedItem().toString();
+		}
+		catch (Exception e){
+			Log.e("ERROR","ERROR IN CODE: "+e.toString());
+			e.printStackTrace();
+		}
 		// Get the orbital values
 		EditText curOrbitEditText = (EditText) findViewById(R.id.start_orbit_radius);
 		if( curOrbitEditText.getText().toString().length() == 0){
