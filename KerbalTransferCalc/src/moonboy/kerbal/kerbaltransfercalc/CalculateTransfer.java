@@ -1,11 +1,6 @@
 package moonboy.kerbal.kerbaltransfercalc;
 
 
-import java.io.IOException;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -15,72 +10,75 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.widget.TextView;
 
 // Class to open the corresponding XML file for particular planets
 // and store the information for it.
 class PlanetInfo{
 	// Class variables
 	private double mass, inclination;
-	private int sphereOfInfluence, semiMajorAxis, orbitalPeriod, argumentOfPeriapsis, radius;
-	private XmlPullParser xpp;
+	private long sphereOfInfluence, semiMajorAxis, orbitalPeriod;
+    private int argumentOfPeriapsis, radius;
 	
 	// Constructor
 	PlanetInfo(Context parent, String planet){
-		// Since a switch-case statement doesn't work for strings
-		// nest the if's
+		// Nesting if's cause case-switch doesn't work with strings
 		if (planet == "Moho"){
-			xpp = parent.getResources().getXml(R.xml.moho);
+			mass = 2.53e21;
+			inclination = 7.0;
+			sphereOfInfluence = 9646663L;
+			semiMajorAxis = 9832684544L;
+			orbitalPeriod = 2215754L;
+			radius = 250;
+			argumentOfPeriapsis = 15;
 		} else if (planet == "Eve"){
-			xpp = parent.getResources().getXml(R.xml.eve);
+			mass = 1.23e23;
+			inclination = 2.1;
+			sphereOfInfluence = 85109365L;
+			semiMajorAxis = 9832684544L;
+			orbitalPeriod = 5657995L;
+			radius = 700;
+			argumentOfPeriapsis = 0;
 		} else if (planet == "Kerbin"){
-			xpp = parent.getResources().getXml(R.xml.kerbin);
+			mass = 5.29e22;
+			inclination = 0.0;
+			sphereOfInfluence = 84159286L;
+			semiMajorAxis = 13599840256L;
+			orbitalPeriod = 9203545L;
+			radius = 600;
+			argumentOfPeriapsis = 0;
 		} else if (planet == "Duna"){
-			xpp = parent.getResources().getXml(R.xml.duna);
+			mass = 4.52e21;
+			inclination = 0.06;
+			sphereOfInfluence = 47921949L;
+			semiMajorAxis = 20726155264L;
+			orbitalPeriod = 17315400L;
+			radius = 320;
+			argumentOfPeriapsis = 0;
 		} else if (planet == "Dres"){
-			xpp = parent.getResources().getXml(R.xml.dres);
+			mass = 3.22e20;
+			inclination = 5.0;
+			sphereOfInfluence = 32832840L;
+			semiMajorAxis = 40839348203L;
+			orbitalPeriod = 47893063L;
+			radius = 138;
+			argumentOfPeriapsis = 90;
 		} else if (planet == "Jool"){
-			xpp = parent.getResources().getXml(R.xml.jool);
-		} else {
-			xpp = parent.getResources().getXml(R.xml.eeloo);
-		}
-		try{
-			Toast.makeText(parent, "Getting Orbital information for "+planet, Toast.LENGTH_LONG).show();
-			int eventType = xpp.getEventType();
-			while (eventType != XmlPullParser.END_DOCUMENT){
-				// Find the start tag then use nested if's again to assign values
-				if(eventType == XmlPullParser.START_TAG){
-					if (xpp.getName()=="radius-km"){
-						xpp.next();
-						radius = Integer.parseInt(xpp.getText());
-					} else if (xpp.getName() == "mass-kg"){
-						xpp.next();
-						mass = Double.parseDouble(xpp.getText());
-					} else if (xpp.getName() == "soi-m"){
-						xpp.next();
-						sphereOfInfluence = Integer.parseInt(xpp.getText());
-					} else if (xpp.getName() == "semimajor-m"){
-						xpp.next();
-						semiMajorAxis = Integer.parseInt(xpp.getText());
-					} else if (xpp.getName() == "orbperiod-s"){
-						xpp.next();
-						orbitalPeriod = Integer.parseInt(xpp.getText());
-					} else if (xpp.getName() == "inclination-deg"){
-						xpp.next();
-						inclination = Double.parseDouble(xpp.getText());
-					} else if (xpp.getName() == "argofper-deg"){
-						xpp.next();
-						argumentOfPeriapsis = Integer.parseInt(xpp.getText());
-					} else {
-						Toast.makeText(parent, "Resource "+xpp.getName()+" not recognized!", Toast.LENGTH_LONG).show();
-					}
-				}
-				eventType = xpp.next();
-			}
-		}catch(XmlPullParserException e){
-			e.printStackTrace();
-		}catch(IOException e){
-			e.printStackTrace();
+			mass = 4.24e24;
+			inclination = 1.304;
+			sphereOfInfluence = 2455985185L;
+			semiMajorAxis = 68773560320L;
+			orbitalPeriod = 104661432L;
+			radius = 6000;
+			argumentOfPeriapsis = 0;
+		} else { //Planet must be Eeloo in this case
+			mass = 1.12e21;
+			inclination = 6.15;
+			sphereOfInfluence = 119082942L;
+			semiMajorAxis = 90118820000L;
+			orbitalPeriod = 156992048L;
+			radius = 210;
+			argumentOfPeriapsis = 260;
 		}
 	}
 
@@ -91,13 +89,13 @@ class PlanetInfo{
 	double getInclination(){
 		return inclination;
 	}
-	int getSOI(){
+	long getSOI(){
 		return sphereOfInfluence;
 	}
-	int getSemiMajorAxis(){
+	long getSemiMajorAxis(){
 		return semiMajorAxis;
 	}
-	int getPeriod(){
+	long getPeriod(){
 		return orbitalPeriod;
 	}
 	int getRadius(){
@@ -326,13 +324,13 @@ public class CalculateTransfer extends Activity {
 		travelTime/=(double) TransferParameters.SEC_DAY;
 		
 		// Display this lovely information
-		//displayData(travelTime,transferYear,transferDOY,delVEsc,delVCap,yearsToTransfer,daysToTransfer,hoursToTransfer,burnAngleDeg,curPlanet,tarPlanet);
+		displayData(travelTime,transferYear,transferDOY,delVEsc,delVCap,yearsToTransfer,daysToTransfer,hoursToTransfer,burnAngleDeg,curPlanet,tarPlanet);
 	}
 	
-/*	// Method to display the data
+	// Method to display the data
 	public void displayData(double transTime, double winYear, double winDOY, double delVEsc, double delVCap, double yearsToTransfer, 
 			double daysToTransfer, double hoursToTransfer, double burnAngle, String curPlanet, String tarPlanet){
 		TextView planets = (TextView)findViewById(R.id.planets);
 		planets.append(curPlanet+" to "+tarPlanet);
-	}*/
+	}
 }
